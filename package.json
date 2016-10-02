@@ -1,0 +1,24 @@
+{
+  "name": "apatite-simple-example",
+  "version": "1.0.0",
+  "description": "Simple example for Apatite",
+  "main": "example.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apatitejs/apatite-simple-example.git"
+  },
+  "keywords": [
+    "apatite",
+    "example",
+    "orm"
+  ],
+  "author": "Madhu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/apatitejs/apatite-simple-example/issues"
+  },
+  "homepage": "https://github.com/apatitejs/apatite-simple-example#readme"
+}
