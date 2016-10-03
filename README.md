@@ -2,15 +2,15 @@
 
 ## Installation
 
-1. Clone this repository.
+- Clone this repository.
 
-2. Install Apatite.
+- Install Apatite.
 
 ```bash
 $ npm install apatite --save
 ```
 
-3. Install one of the following:
+- Install one of the following:
 
 Oracle
 ```bash
@@ -32,7 +32,7 @@ Microsoft SQL Server
 $ npm install tedious@1.14.0
 ```
 
-4. Uncomment the code in example.js one by one and execute:
+- Uncomment the code in example.js one by one and execute:
 
 ```bash
 $ node example.js
