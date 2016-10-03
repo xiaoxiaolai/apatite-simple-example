@@ -7,8 +7,8 @@
 //var connOptions = { userName: 'apatite', password: 'apatite', connectionInfo: 'localhost/apatite' }
 //var apatite = require('apatite').forMysql(connOptions)
 
-var connOptions = { userName: 'apatite', password: 'apatite', connectionInfo: 'localhost/apatite' }
-var apatite = require('apatite').forMssql(connOptions)
+//var connOptions = { userName: 'apatite', password: 'apatite', connectionInfo: 'localhost/apatite' }
+//var apatite = require('apatite').forMssql(connOptions)
 
 
 var Department = require('./department.js')
@@ -50,56 +50,13 @@ apatite.newSession(function(sessionErr, newSession) {
     })*/
 })
 
-function deleteDepartment(onDeleted) {
-    session.newQuery(Department).execute(function(fetchErr, departments) {
-        if (fetchErr)
-            return console.error(fetchErr)
-
-        var changesToDo = function(changesDone) {
-            session.registerDelete(departments[0])
-            changesDone() // must be called
-        }
-
-        session.doChangesAndSave(changesToDo, function(saveErr) {
-            if (saveErr)
-                return console.error(saveErr)
-            
-            console.log('Records deleted successfully.');
-            onDeleted()
-        })
-    })
-}
-
-function changeDepartment(onChanged) {
-    session.newQuery(Department).execute(function(fetchErr, departments) {
-        if (fetchErr)
-            return console.error(fetchErr)
-
-        var changesToDo = function(changesDone) {
-            departments[0].name = 'Foo and Bar'
-            changesDone() // must be called
-        }
-
-        session.doChangesAndSave(changesToDo, function(saveErr) {
-            if (saveErr)
-                return console.error(saveErr)
-            
-            console.log('Records changed successfully.');
-            onChanged()
-        })
-    })
-}
-
-function fetchDepartmentAndEmployees(onFetched) {
-    session.newQuery(Department).execute(function(fetchErr, departments) {
-        if (fetchErr)
-            return console.error(fetchErr)
-
-        departments[0].employees.getValue(function(empErr, employees) {
-            console.log(JSON.stringify(departments))
-            console.log(JSON.stringify(employees))
-            onFetched()
-        })
+function createAllTables(onTablesCreated) {
+    session.createDBTablesForAllModels(function(creationErr, result) {
+        if (creationErr)
+            return console.error(creationErr)
+        
+        console.log('Created all tables.');
+        onTablesCreated()
     })
 }
 
@@ -134,13 +91,56 @@ function createDepartmentAndEmployees(onCreated) {
     })
 }
 
-function createAllTables(onTablesCreated) {
-    session.createDBTablesForAllModels(function(creationErr, result) {
-        if (creationErr)
-            return console.error(creationErr)
-        
-        console.log('Created all tables.');
-        onTablesCreated()
+function fetchDepartmentAndEmployees(onFetched) {
+    session.newQuery(Department).execute(function(fetchErr, departments) {
+        if (fetchErr)
+            return console.error(fetchErr)
+
+        departments[0].employees.getValue(function(empErr, employees) {
+            console.log(JSON.stringify(departments))
+            console.log(JSON.stringify(employees))
+            onFetched()
+        })
+    })
+}
+
+function changeDepartment(onChanged) {
+    session.newQuery(Department).execute(function(fetchErr, departments) {
+        if (fetchErr)
+            return console.error(fetchErr)
+
+        var changesToDo = function(changesDone) {
+            departments[0].name = 'Foo and Bar'
+            changesDone() // must be called
+        }
+
+        session.doChangesAndSave(changesToDo, function(saveErr) {
+            if (saveErr)
+                return console.error(saveErr)
+            
+            console.log('Records changed successfully.');
+            onChanged()
+        })
+    })
+}
+
+function deleteDepartment(onDeleted) {
+    session.newQuery(Department).execute(function(fetchErr, departments) {
+        if (fetchErr)
+            return console.error(fetchErr)
+
+        var changesToDo = function(changesDone) {
+            session.registerDelete(departments[0])
+            changesDone() // must be called
+        }
+
+        session.doChangesAndSave(changesToDo, function(saveErr) {
+            if (saveErr)
+                return console.error(saveErr)
+            
+            console.log('Records deleted successfully.');
+            onDeleted()
+        })
     })
 }
 
